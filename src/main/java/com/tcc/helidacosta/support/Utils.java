@@ -2,14 +2,13 @@ package com.tcc.helidacosta.support;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
+import com.tcc.helidacosta.exception.PlatformException;
+import com.tcc.helidacosta.exception.PropertyException;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebElement;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -19,73 +18,86 @@ import io.appium.java_client.remote.MobilePlatform;
 
 public class Utils {
 
-	public static String readProperty(String property) {
-		Properties prop = null;
-		String value = null;
+
+    private Utils() {}
+
+	/**
+	 * Le o valor de uma propriedade do arquivo <i>config.properties<i/>
+	 * @param propriedade nome da propriedade
+	 * @return valor da propriedade
+	 */
+	public static String lerPropriedade(String propriedade) {
+		Properties prop;
+		String valor = null;
 		try {
 			prop = new Properties();
 			prop.load(new FileInputStream(new File("config.properties")));
+
+            valor = prop.getProperty(propriedade);
 			
-			value = prop.getProperty(property);
-			
-			if (value == null || value == "") {
-				throw new Exception("Value not set or empty");
+			if (valor == null || valor == "") {
+				throw new PropertyException();
 			}
 			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return value;
+		return valor;
 	}
-		
-	public static AppiumDriver<?> returnDriver(String platform) throws MalformedURLException {
+
+    /**
+     * Retorna o driver (iOS ou Android) para a execução dos testes de acordo com a plataforma informada
+     * @param plataforma plataforma ios ou android
+     * @return IOSDriver para execução em iOS ou AndroidDriver para execução em Android
+     * @throws MalformedURLException
+     */
+	public static AppiumDriver<?> retornaDriver(String plataforma) throws MalformedURLException, PlatformException {
 		AppiumDriver<?> driver = null;
-		DesiredCapabilities capabilities = new DesiredCapabilities();
+		DesiredCapabilities capacidade = new DesiredCapabilities();
+
+		final Boolean isHybrid = Boolean.parseBoolean(lerPropriedade("execucao.hibrida"));
 		
-		if (Boolean.parseBoolean(Utils.readProperty("run.hybrid")) == true) {
-			capabilities.setCapability(MobileCapabilityType.AUTO_WEBVIEW, true);
+		if (isHybrid) {
+			capacidade.setCapability(MobileCapabilityType.AUTO_WEBVIEW, true);
 		}
 		
-		String completURL = "http://" + Utils.readProperty("run.ip") + ":" + Utils.readProperty("run.port") + "/wd/hub";
+		String urlCompleta = "http://" + lerPropriedade("execucao.ip") + ":" + lerPropriedade("execucao.porta") + "/wd/hub";
 		
-		switch (platform.toLowerCase()) {
+		switch (plataforma.toLowerCase()) {
 		
 		case "ios":
 			
-			if (Boolean.parseBoolean(Utils.readProperty("run.hybrid")) == true) {
-				capabilities.setCapability(MobileCapabilityType.APP, new File(Utils.readProperty("app.ios.h.path")).getAbsolutePath());
-			}else {	capabilities.setCapability(MobileCapabilityType.APP, new File(Utils.readProperty("app.ios.path")).getAbsolutePath());}
+			if (isHybrid) {
+				capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("ios.app.hibrido")).getAbsolutePath());
+			}else {	capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("ios.app.nativo")).getAbsolutePath());}
 			
-			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, Utils.readProperty("device.android.name"));
-			capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, Utils.readProperty("platform.android.version"));
-			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
+			capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, lerPropriedade("ios.nome.dispositivo"));
+			capacidade.setCapability(MobileCapabilityType.PLATFORM_VERSION, lerPropriedade("android.versao.plataforma"));
+			capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
 			
-			if ( Boolean.parseBoolean(Utils.readProperty("platform.ios.xcode8")) == true) {
-				capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+			if ( Boolean.parseBoolean(lerPropriedade("ios.xcode8"))) {
+				capacidade.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
 			}
 			
-			driver = new IOSDriver<RemoteWebElement>(new URL(completURL), capabilities);
+			driver = new IOSDriver<>(new URL(urlCompleta), capacidade);
 			break;
 
 		case "android":
 			
-			if (Boolean.parseBoolean(Utils.readProperty("run.hybrid")) == true) {
-				capabilities.setCapability(MobileCapabilityType.APP, new File(Utils.readProperty("app.android.h.path")).getAbsolutePath());}
-			else {capabilities.setCapability(MobileCapabilityType.APP, new File(Utils.readProperty("app.android.path")).getAbsolutePath());}
+			if (isHybrid) {
+				capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("android.app.hibrido")).getAbsolutePath());}
+			else {capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("android.app.nativo")).getAbsolutePath());}
 			
-			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, Utils.readProperty("device.android.name"));
-			capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+			capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, lerPropriedade("android.nome.dispositivo"));
+			capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
 			
-			driver = new AndroidDriver<RemoteWebElement>(new URL(completURL), capabilities);
+			driver = new AndroidDriver<>(new URL(urlCompleta), capacidade);
 			break;
 			
 		    default:
-			break;
+		        throw new PlatformException();
+
 		}
 		
 		return driver;

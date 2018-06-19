@@ -9,14 +9,14 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.concurrent.TimeUnit;
+import java.time.temporal.ChronoUnit;
 
 public class MainScreenPageObject {
 
 	@AndroidFindBy(id = "org.traeg.fastip:id/billAmtEditText")
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextField[1]")
+	@iOSFindBy(xpath = "//XCUIElementTypeTextField")
 	@FindBy(id = "billAmount")
-    @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
+    @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
 	MobileElement billAmount;
 	
 	@AndroidFindBy(id = "org.traeg.fastip:id/calcTipButton")
@@ -24,26 +24,22 @@ public class MainScreenPageObject {
 	@FindBy(id = "calcTip")
 	MobileElement calculateTip;
 	
-	@AndroidFindBy(id = "org.traeg.fastip:id/tipPctTextView")
-	MobileElement tipPercentage;
-	
 	@AndroidFindBy(id = "org.traeg.fastip:id/menu_settings")
-	//@iOSFindBy(xpath = "//XCUIElementTypeApplication[@name=\"FasTip\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeButton")
     @iOSFindBy(id = "Settings")
 	@FindBy(id = "settingsButton")
-    @WithTimeout(time = 10, unit = TimeUnit.SECONDS)
+    @WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
 	MobileElement menuSettings;
 	
 	@AndroidFindBy(id = "org.traeg.fastip:id/tipAmtTextView")
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]")
+	@iOSFindBy(xpath = "//XCUIElementTypeStaticText[2]")
 	@FindBy(id = "tipAmount")
-	@WithTimeout(time = 10, unit = TimeUnit.SECONDS)
+	@WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
 	MobileElement tipAmount;
 	
 	@AndroidFindBy(id = "org.traeg.fastip:id/totalAmtTextView")
-	@iOSFindBy(xpath = "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[4]")
+	@iOSFindBy(xpath = "//XCUIElementTypeStaticText[4]")
 	@FindBy(id = "totalAmount")
-	@WithTimeout(time = 10, unit = TimeUnit.SECONDS)
+	@WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
 	MobileElement totalAmount;
 	
 	public MainScreenPageObject(AppiumDriver<?> driver) {
@@ -53,27 +49,19 @@ public class MainScreenPageObject {
 	public void fillBillAmount(String amount) {
 		billAmount.sendKeys(amount);
 	}
-	
-	public String getBillamount() {
-		return billAmount.getText();
-	}
-	
-	public void clickMenuSettings() {
-		menuSettings.click();
-	}
-			
-	public void clickCalculateTip() {
-		calculateTip.click();
-	}
-	
-	public String getTipPercentage() {
-		return tipPercentage.getText();
-	}
-	
+
+    public void clickCalculateTip() {
+        calculateTip.click();
+    }
+
 	public String getTipAmount() {
 		return tipAmount.getText();
 	}
-	
+
+	public void clickMenuSettings() {
+		menuSettings.click();
+	}
+
 	public String getTotalAmount() {
 		return totalAmount.getText();
 	}

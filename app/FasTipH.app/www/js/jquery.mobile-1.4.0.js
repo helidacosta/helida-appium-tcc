@@ -1556,7 +1556,7 @@ $.mobile.widget = $.Widget;
 //         inclusion of the X-UA-Compatible IE=EmulateIE7 meta tag.
 // 1.0   - (1/9/2010) Initial Release. Broke out the jQuery BBQ event.special
 //         window.onhashchange functionality into a separate plugin for users
-//         who want just the basic event & back button support, without all the
+//         who want just the basico event & back button support, without all the
 //         extra awesomeness that BBQ provides. This plugin will be included as
 //         part of jQuery BBQ, but also be available separately.
 
@@ -3160,7 +3160,7 @@ if ( !$.support.boxShadow ) {
 // the device their document is loaded on supports.
 //
 // The idea here is to allow the developer to register listeners for the
-// basic mouse events, such as mousedown, mousemove, mouseup, and click,
+// basico mouse events, such as mousedown, mousemove, mouseup, and click,
 // and the plugin will take care of registering the correct listeners
 // behind the scenes to invoke the listener at the fastest possible time
 // for that device, while still retaining the order of event firing in
@@ -14578,7 +14578,7 @@ $.widget( "ui.tabs", {
 	$( window.document ).trigger( "mobileinit" );
 
 	// support conditions
-	// if device support condition(s) aren't met, leave things as they are -> a basic, usable experience,
+	// if device support condition(s) aren't met, leave things as they are -> a basico, usable experience,
 	// otherwise, proceed with the enhancements
 	if ( !$.mobile.gradeA() ) {
 		return;

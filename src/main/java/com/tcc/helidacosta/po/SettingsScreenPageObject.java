@@ -27,13 +27,10 @@ public class SettingsScreenPageObject {
 	public void clickSettingsButton() {
 		settingsButton.click();
 	}
+
 	public void fillTipPercentage(String percentage) {
 		fillPercentage.sendKeys(percentage);
 	}
-	
-	public String getfillPercentage() {
-		return fillPercentage.getText();
-	}	
 	
 	public void clearPercentage() {
 		fillPercentage.clear();
