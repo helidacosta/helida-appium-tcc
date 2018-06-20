@@ -2,7 +2,6 @@
 
 Este projeto é o trabalho de conclusão de curso
 
-Readme
 Passos para rodar o projeto
 1° Passo: Instalar os seguintes softwares:
 - Eclipse
