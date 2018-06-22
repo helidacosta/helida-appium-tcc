@@ -25,10 +25,6 @@ public class TipTest {
 
 	private AppiumDriver<?> driver;
 
-    /*
-     * O método retornaDriver é o responsável por retornar o driver correto (iOS ou Android) que é determinado
-     * pela propriedade plataforma.execucao
-     */
 	@Before
 	public void setUp() throws MalformedURLException, PlatformException {
 		driver = retornaDriver(lerPropriedade("plataforma.execucao"));
@@ -50,7 +46,5 @@ public class TipTest {
 		//checa o resultado
 		assertEquals("$23.73", mainScreen.getTipAmount());
 		assertEquals("$181.93", mainScreen.getTotalAmount());
-		
 	}
-
 }
