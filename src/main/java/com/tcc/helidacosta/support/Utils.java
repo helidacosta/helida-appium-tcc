@@ -52,7 +52,8 @@ public class Utils {
      * @return IOSDriver para execução em iOS ou AndroidDriver para execução em Android
      * @throws MalformedURLException
      */
-	public static AppiumDriver<?> retornaDriver(String plataforma) throws MalformedURLException, PlatformException {
+	public static AppiumDriver<?> retornaDriver(String plataforma) throws MalformedURLException, 
+	PlatformException {
 		AppiumDriver<?> driver = null;
 		DesiredCapabilities capacidade = new DesiredCapabilities();
 
@@ -62,18 +63,23 @@ public class Utils {
 			capacidade.setCapability(MobileCapabilityType.AUTO_WEBVIEW, true);
 		}
 		
-		String urlCompleta = "http://" + lerPropriedade("execucao.ip") + ":" + lerPropriedade("execucao.porta") + "/wd/hub";
+		String urlCompleta = "http://" + lerPropriedade("execucao.ip") + ":" + 
+			lerPropriedade("execucao.porta") + "/wd/hub";
 		
 		switch (plataforma.toLowerCase()) {
 		
 		case "ios":
 			
 			if (isHybrid) {
-				capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("ios.app.hibrido")).getAbsolutePath());
-			}else {	capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("ios.app.nativo")).getAbsolutePath());}
+				capacidade.setCapability(MobileCapabilityType.APP, 
+				new File(lerPropriedade("ios.app.hibrido")).getAbsolutePath());
+			}else {	capacidade.setCapability(MobileCapabilityType.APP, 
+				new File(lerPropriedade("ios.app.nativo")).getAbsolutePath());}
 			
-			capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, lerPropriedade("ios.nome.dispositivo"));
-			capacidade.setCapability(MobileCapabilityType.PLATFORM_VERSION, lerPropriedade("android.versao.plataforma"));
+			capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, 
+						 lerPropriedade("ios.nome.dispositivo"));
+			capacidade.setCapability(MobileCapabilityType.PLATFORM_VERSION, 
+						 lerPropriedade("android.versao.plataforma"));
 			capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
 			
 			if ( Boolean.parseBoolean(lerPropriedade("ios.xcode8"))) {
@@ -86,10 +92,13 @@ public class Utils {
 		case "android":
 			
 			if (isHybrid) {
-				capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("android.app.hibrido")).getAbsolutePath());}
-			else {capacidade.setCapability(MobileCapabilityType.APP, new File(lerPropriedade("android.app.nativo")).getAbsolutePath());}
+				capacidade.setCapability(MobileCapabilityType.APP, 
+				new File(lerPropriedade("android.app.hibrido")).getAbsolutePath());}
+			else {capacidade.setCapability(MobileCapabilityType.APP, 
+				new File(lerPropriedade("android.app.nativo")).getAbsolutePath());}
 			
-			capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, lerPropriedade("android.nome.dispositivo"));
+			capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, 
+						 lerPropriedade("android.nome.dispositivo"));
 			capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
 			
 			driver = new AndroidDriver<>(new URL(urlCompleta), capacidade);
