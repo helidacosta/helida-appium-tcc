@@ -28,19 +28,23 @@ public class CalculaGorjetaIOS {
 	@Test
 	public void testCalculateDefaultTip() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.APP, new File("app/FasTip.app").getAbsolutePath());
+        capabilities.setCapability(MobileCapabilityType.APP, new File("app/FasTip.app").
+				   getAbsolutePath());
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone SE");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11.1");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
 
-        IOSDriver<MobileElement> driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        IOSDriver<MobileElement> driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), 
+							  capabilities);
 
 	driver.findElement(By.xpath("//XCUIElementTypeTextField")).sendKeys("100");
 	driver.findElementByAccessibilityId("Calculate Tip").click();
 
-	assertEquals("$15.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[2]")).getText());
-	assertEquals("$115.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[4]")).getText());
+	assertEquals("$15.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[2]"))
+		     .getText());
+	assertEquals("$115.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[4]"))
+		     .getText());
         driver.quit();
 	}
 
