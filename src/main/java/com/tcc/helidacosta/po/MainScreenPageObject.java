@@ -36,15 +36,15 @@ public class MainScreenPageObject {
 	@WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
 	MobileElement tipAmount;
 	
-	@AndroidFindBy(id = "org.traeg.fastip:id/totalAmtTextView")
-	@iOSFindBy(xpath = "//XCUIElementTypeStaticText[4]")
-	@FindBy(id = "totalAmount")
-	@WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
-	MobileElement totalAmount;
+@AndroidFindBy(id = "org.traeg.fastip:id/totalAmtTextView")
+@iOSFindBy(xpath = "//XCUIElementTypeStaticText[4]")
+@FindBy(id = "totalAmount")
+@WithTimeout(time = 10, chronoUnit = ChronoUnit.SECONDS)
+MobileElement totalAmount;
 	
-	public MainScreenPageObject(AppiumDriver<?> driver) {
-		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-	}
+public MainScreenPageObject(AppiumDriver<?> driver) {
+	PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+}
 	
 	public void fillBillAmount(String amount) {
 		billAmount.sendKeys(amount);
@@ -54,16 +54,16 @@ public class MainScreenPageObject {
         calculateTip.click();
     }
 
-	public String getTipAmount() {
-		return tipAmount.getText();
-	}
+public String getTipAmount() {
+	return tipAmount.getText();
+}
 
-	public void clickMenuSettings() {
-		menuSettings.click();
-	}
+public void clickMenuSettings() {
+	menuSettings.click();
+}
 
-	public String getTotalAmount() {
-		return totalAmount.getText();
-	}
+public String getTotalAmount() {
+	return totalAmount.getText();
+}
 	
 }
