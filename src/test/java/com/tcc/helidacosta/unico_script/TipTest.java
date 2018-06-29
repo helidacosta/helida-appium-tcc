@@ -23,17 +23,17 @@ import static com.tcc.helidacosta.support.Utils.*;
  */
 public class TipTest {
 
-	private AppiumDriver<?> driver;
+private AppiumDriver<?> driver;
 
-	@Before
-	public void setUp() throws MalformedURLException, PlatformException {
-		driver = retornaDriver(lerPropriedade("plataforma.execucao"));
-	}
+@Before
+public void setUp() throws MalformedURLException, PlatformException {
+	driver = retornaDriver(lerPropriedade("plataforma.execucao"));
+}
 	
-	@After
-	public void tearDown() {
-		driver.quit();
-	}	
+@After
+public void tearDown() {
+	driver.quit();
+}	
 @Test
 public void testCalculateDefaultTip() {
 	MainScreenPageObject mainScreen = new MainScreenPageObject(driver);
