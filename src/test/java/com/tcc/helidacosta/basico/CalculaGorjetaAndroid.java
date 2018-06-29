@@ -32,13 +32,16 @@ public class CalculaGorjetaAndroid {
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
 
-        AndroidDriver<MobileElement> driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        AndroidDriver<MobileElement> driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), 
+								  capabilities);
 
         driver.findElement(By.id("org.traeg.fastip:id/billAmtEditText")).sendKeys("100");
 		driver.findElement(By.id("org.traeg.fastip:id/calcTipButton")).click();
 
-		assertEquals("$15.00", driver.findElement(By.id("org.traeg.fastip:id/tipAmtTextView")).getText());
-		assertEquals("$115.00", driver.findElement(By.id("org.traeg.fastip:id/totalAmtTextView")).getText());
+		assertEquals("$15.00", driver.findElement(By.id("org.traeg.fastip:id/tipAmtTextView"))
+			     .getText());
+		assertEquals("$115.00", driver.findElement(By.id("org.traeg.fastip:id/totalAmtTextView"))
+			     .getText());
 
 		driver.quit();
 	}
