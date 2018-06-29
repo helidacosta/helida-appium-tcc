@@ -36,29 +36,23 @@ public class TipTestNewPercentage {
 		driver.quit();
 	}
 	
-	@Test
-	public void testCalculateNewPercentage() {
-		// instancia o page object da tela de principal
-		MainScreenPageObject mainScreen = new MainScreenPageObject(driver);
-		// instancia o page object da tela de configurações
-		SettingsScreenPageObject settingsScreen = new SettingsScreenPageObject(driver);
-		
-		//click menu settings
-		mainScreen.clickMenuSettings();
+@Test
+public void testCalculateNewPercentage() {
 
-		//altera a porcentagem
-		settingsScreen.clearPercentage();
-		settingsScreen.fillTipPercentage("20");
-		settingsScreen.clickSettingsButton();
-
-		// volta a instanciar o page object da tela principal, para que seja possível localizar os componentes
-      		mainScreen = new MainScreenPageObject(driver);
-		//calcula a porcentagem
-		mainScreen.fillBillAmount("179.83");
-		mainScreen.clickCalculateTip();
+	MainScreenPageObject mainScreen = new MainScreenPageObject(driver);
+	SettingsScreenPageObject settingsScreen = new SettingsScreenPageObject(driver);
 		
-		//checa o resultado
-		assertEquals("$35.97", mainScreen.getTipAmount());
-		assertEquals("$215.80", mainScreen.getTotalAmount());	
-	}
+	mainScreen.clickMenuSettings();
+
+	settingsScreen.clearPercentage();
+	settingsScreen.fillTipPercentage("20");
+	settingsScreen.clickSettingsButton();
+
+      	mainScreen = new MainScreenPageObject(driver);
+	mainScreen.fillBillAmount("179.83");
+	mainScreen.clickCalculateTip();
+
+	assertEquals("$35.97", mainScreen.getTipAmount());
+	assertEquals("$215.80", mainScreen.getTotalAmount());	
+}
 }
