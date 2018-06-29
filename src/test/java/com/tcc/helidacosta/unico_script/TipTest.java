@@ -33,18 +33,17 @@ public class TipTest {
 	@After
 	public void tearDown() {
 		driver.quit();
-	}
-	
-	@Test
-	public void testCalculateDefaultTip() {
-		MainScreenPageObject mainScreen = new MainScreenPageObject(driver);
-				
-		//calcula a porcentagem
-		mainScreen.fillBillAmount("158.20");
-		mainScreen.clickCalculateTip();
+	}	
+@Test
+public void testCalculateDefaultTip() {
+	MainScreenPageObject mainScreen = new MainScreenPageObject(driver);
+			
+	//calcula a porcentagem
+	mainScreen.fillBillAmount("158.20");
+	mainScreen.clickCalculateTip();
 		
-		//checa o resultado
-		assertEquals("$23.73", mainScreen.getTipAmount());
-		assertEquals("$181.93", mainScreen.getTotalAmount());
-	}
+	//checa o resultado
+	assertEquals("$23.73", mainScreen.getTipAmount());
+	assertEquals("$181.93", mainScreen.getTotalAmount());
+}
 }
