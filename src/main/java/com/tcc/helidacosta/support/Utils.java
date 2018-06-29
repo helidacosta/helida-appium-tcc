@@ -65,44 +65,44 @@ PlatformException {
 		
 switch (plataforma.toLowerCase()) {
 		
-	case "ios":
+case "ios":
+			
+	if (isHybrid) {
+	capacidade.setCapability(MobileCapabilityType.APP, 
+	new File(lerPropriedade("ios.app.hibrido")).getAbsolutePath());
+	}else {	capacidade.setCapability(MobileCapabilityType.APP, 
+		new File(lerPropriedade("ios.app.nativo")).getAbsolutePath());}
+			
+	capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, 
+			 lerPropriedade("ios.nome.dispositivo"));
+	capacidade.setCapability(MobileCapabilityType.PLATFORM_VERSION, 
+					 lerPropriedade("android.versao.plataforma"));
+	capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
+			
+	if ( Boolean.parseBoolean(lerPropriedade("ios.xcode8"))) {
+		capacidade.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+	}
+			
+	driver = new IOSDriver<>(new URL(urlCompleta), capacidade);
+	break;
+
+case "android":
 			
 	if (isHybrid) {
 		capacidade.setCapability(MobileCapabilityType.APP, 
-		new File(lerPropriedade("ios.app.hibrido")).getAbsolutePath());
-		}else {	capacidade.setCapability(MobileCapabilityType.APP, 
-			new File(lerPropriedade("ios.app.nativo")).getAbsolutePath());}
+		new File(lerPropriedade("android.app.hibrido")).getAbsolutePath());}
+	else {capacidade.setCapability(MobileCapabilityType.APP, 
+		new File(lerPropriedade("android.app.nativo")).getAbsolutePath());}
 			
-		capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, 
-				 lerPropriedade("ios.nome.dispositivo"));
-		capacidade.setCapability(MobileCapabilityType.PLATFORM_VERSION, 
-					 lerPropriedade("android.versao.plataforma"));
-		capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
+	capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, 
+				 lerPropriedade("android.nome.dispositivo"));
+	capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
 			
-		if ( Boolean.parseBoolean(lerPropriedade("ios.xcode8"))) {
-			capacidade.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
-		}
+	driver = new AndroidDriver<>(new URL(urlCompleta), capacidade);
+	break;
 			
-		driver = new IOSDriver<>(new URL(urlCompleta), capacidade);
-		break;
-
-	case "android":
-			
-		if (isHybrid) {
-			capacidade.setCapability(MobileCapabilityType.APP, 
-			new File(lerPropriedade("android.app.hibrido")).getAbsolutePath());}
-		else {capacidade.setCapability(MobileCapabilityType.APP, 
-			new File(lerPropriedade("android.app.nativo")).getAbsolutePath());}
-			
-		capacidade.setCapability(MobileCapabilityType.DEVICE_NAME, 
-					 lerPropriedade("android.nome.dispositivo"));
-		capacidade.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
-			
-		driver = new AndroidDriver<>(new URL(urlCompleta), capacidade);
-		break;
-			
-	default: throw new PlatformException();
-	}
-	return driver;
-	}
+default: throw new PlatformException();
+}
+return driver;
+}
 }
