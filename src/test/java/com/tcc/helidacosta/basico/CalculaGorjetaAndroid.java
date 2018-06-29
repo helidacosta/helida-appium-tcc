@@ -36,14 +36,11 @@ public class CalculaGorjetaAndroid {
 								  capabilities);
 
         driver.findElement(By.id("org.traeg.fastip:id/billAmtEditText")).sendKeys("100");
-		driver.findElement(By.id("org.traeg.fastip:id/calcTipButton")).click();
+	driver.findElement(By.id("org.traeg.fastip:id/calcTipButton")).click();
 
-		assertEquals("$15.00", driver.findElement(By.id("org.traeg.fastip:id/tipAmtTextView"))
-			     .getText());
-		assertEquals("$115.00", driver.findElement(By.id("org.traeg.fastip:id/totalAmtTextView"))
-			     .getText());
-
-		driver.quit();
-	}
+	assertEquals("$15.00", driver.findElement(By.id("org.traeg.fastip:id/tipAmtTextView")).getText());
+	assertEquals("$115.00", driver.findElement(By.id("org.traeg.fastip:id/totalAmtTextView")).getText());
+	driver.quit();
+}
 
 }
