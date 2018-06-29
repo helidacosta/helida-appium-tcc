@@ -36,13 +36,12 @@ public class CalculaGorjetaIOS {
 
         IOSDriver<MobileElement> driver = new IOSDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 
-		driver.findElement(By.xpath("//XCUIElementTypeTextField")).sendKeys("100");
-		driver.findElementByAccessibilityId("Calculate Tip").click();
+	driver.findElement(By.xpath("//XCUIElementTypeTextField")).sendKeys("100");
+	driver.findElementByAccessibilityId("Calculate Tip").click();
 
-		assertEquals("$15.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[2]")).getText());
-		assertEquals("$115.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[4]")).getText());
-
-	    driver.quit();
+	assertEquals("$15.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[2]")).getText());
+	assertEquals("$115.00", driver.findElement(By.xpath("//XCUIElementTypeStaticText[4]")).getText());
+        driver.quit();
 	}
 
 }
